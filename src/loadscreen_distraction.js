@@ -230,7 +230,7 @@ function printMousePos(event) {
   }
   let dataStr = JSON.stringify(object)
 
-  fetch('http://localhost:8016',{
+ fetch('https://hci-sandbox.usask.ca/logging_holes',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
