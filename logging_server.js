@@ -20,7 +20,7 @@ app.use(express.urlencoded({ limit: '50mb' }));
  
 var number = 0
 
-app.post("/logging", async (req, res) => {
+app.post("/logging_holes", async (req, res) => {
 
     try {
         let content = JSON.stringify(req.body)
