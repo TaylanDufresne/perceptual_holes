@@ -200,11 +200,13 @@ function printMousePos(event) {
 
   let x = event.clientX
   let y = event.clientY
+  let selection;
 
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
     if (x > areas[keys[key]][0] && x < areas[keys[key]][2] && y > areas[keys[key]][1] && y < areas[keys[key]][3]) {
       console.log(keys[key])
+      selection = keys[key]
       break
     }
   }
