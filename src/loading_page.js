@@ -10,11 +10,11 @@ let ickY = 0
 
 
 function next_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 565) / 35) + 568
-  let pos_y = 35 * Math.floor((y - 265) / 35) + 265
+  let pos_x = 35 * Math.floor((x - 555) / 35) + 555
+  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x > 635 || pos_y > 290) && (pos_x < 740 || pos_y < 400)) {
+  if ((pos_x >= 625 || pos_y >= 280) && (pos_x <= 729 || pos_y <= 390)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
@@ -33,17 +33,17 @@ function next_month_dates(x, y) {
 
 function listings(x, y) {
   change_cursor("pointer")
-  if (y > 1465) {
-    underline(380, 450, 1545)
+  if (y > 1455) {
+    underline(370, 450, 1535)
   }
-  else if (y > 1200) {
-    underline(380, 450, 1290)
+  else if (y > 1190) {
+    underline(370, 450, 1280)
   }
-  else if (y > 955) {
-    underline(380, 250, 1033)
+  else if (y > 945) {
+    underline(370, 385, 1023)
   }
-  else if (y > 695) {
-    underline(380, 310, 777)
+  else if (y > 685) {
+    underline(370, 430, 767)
   }
   else if (y > 450) {
 
@@ -56,11 +56,11 @@ function calendar(x, y) {
 }
 
 function current_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 300) / 35) + 300
-  let pos_y = 35 * Math.floor((y - 265) / 35) + 265
+  let pos_x = 35 * Math.floor((x - 290) / 35) + 290
+  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x > 505 || pos_y > 290) && (pos_x < 370 || pos_y < 435)) {
+  if ((pos_x > 495 || pos_y > 280) && (pos_x < 360 || pos_y < 425)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
@@ -103,7 +103,7 @@ function change_cursor(text) {
 
 function close_button(x, y) {
   change_cursor("pointer")
-  underline(815, 45, 548)
+  underline(804, 45, 539)
   return
 }
 
@@ -113,8 +113,8 @@ function text(x, y){
 
 function next_button(x, y){
   let highlight = document.getElementById("highlight")
-  highlight.style.left = 817 + "px"
-  highlight.style.top = 303 + "px"
+  highlight.style.left = 806 + "px"
+  highlight.style.top = 295 + "px"
   highlight.style.opacity = 0.3
   highlight.style.background = "#1d91f0"
   highlight.style.width = "40px"
@@ -140,19 +140,19 @@ function underline(x, width, y) {
 }
 
 let areas = {
-  "Calendar Next Month Dates": [565, 265, 810, 435],
+  "Calendar Next Month Dates": [555, 255, 800, 425],
   "Calendar Current Month Dates": [300, 265, 540, 455],
   "Calendar Close": [815, 530, 865, 550],
-  "Calendar Next Button": [819, 303, 853, 340],
+  "Calendar Next Button": [809, 293, 843, 330],
   "Calendar": [225, 150, 890, 565],
-  "Map": [891, 200, 2235, 1600],
+  "Map": [881, 190, 2225, 1590],
   "Search Box": [20, 80, 365, 130],
-  "Listings": [0, 450, 890, 1600],
-  "Check Dates": [385, 80, 730, 130],
-  "Group": [750, 80, 980, 130],
-  "Top Text": [40, 230, 223, 280],
-  "Bottom Text": [34, 282, 178, 312],
-  "Filter Buttons": [23, 145, 222, 185]
+  "Listings": [0, 440, 880, 1590],
+  "Check Dates": [375, 70, 720, 120],
+  "Group": [740, 70, 970, 120],
+  "Top Text": [30, 220, 213, 270],
+  "Bottom Text": [24, 272, 168, 302],
+  "Filter Buttons": [13, 135, 212, 175]
 }
 
 let hover = {
@@ -283,68 +283,74 @@ document.addEventListener("mousemove", printMove);
 
 let cover1 = document.getElementById("block1")
 cover1.style.position="absolute"
-cover1.style.top ="200px"
-cover1.style.width="216px"
-cover1.style.height="100%"
+cover1.style.top ="195px"
+cover1.style.width="204px"
+cover1.style.height="875px"
 cover1.style.zIndex = 2
 cover1.style.background="white"
 cover1.style.opacity=1
 
 let cover2 = document.getElementById("block2")
 cover2.style.position="absolute"
-cover2.style.top ="566px"
+cover2.style.top ="557px"
 cover2.style.width="880px"
-cover2.style.height="1140px"
+cover2.style.height="522px"
 cover2.style.zIndex = 2
 cover2.style.background="white"
+// cover2.style.background="black"
 cover2.style.opacity=1
 
 let cover3 = document.getElementById("block3")
 cover3.style.position="absolute"
 cover3.style.top ="135px"
-cover3.style.width="216px"
-cover3.style.height="65px"
+cover3.style.width="204px"
+cover3.style.height="55px"
 cover3.style.zIndex = 2
 cover3.style.background="#f5f4f3"
+// cover3.style.background="yellow"
 cover3.style.opacity=1
 
 let cover4 = document.getElementById("block4")
 cover4.style.position="absolute"
 cover4.style.top ="135px"
-cover4.style.left = "224px"
-cover4.style.width="700px"
-cover4.style.height="65px"
+cover4.style.left = "203px"
+cover4.style.width="680px"
+cover4.style.height="55px"
 cover4.style.zIndex = 2
 cover4.style.background="#f5f4f3"
+// cover4.style.background="blue"
 cover4.style.opacity=1
 
 let cover5 = document.getElementById("block5")
 cover5.style.position="absolute"
-cover5.style.top ="200px"
-cover5.style.width="880px"
-cover5.style.height="1440px"
+cover5.style.top ="190px"
+cover5.style.width="870px"
+cover5.style.height="890px"
 cover5.style.zIndex = 2
 cover5.style.background="white"
+// cover5.style.background="red"
 cover5.style.opacity=1
 
 let cover6 = document.getElementById("block6")
 cover6.style.position="absolute"
-cover6.style.top ="200px"
-cover6.style.left="889px"
-cover6.style.width="1350px"
-cover6.style.height="1440px"
+cover6.style.top ="190px"
+cover6.style.left="877px"
+cover6.style.width="1038px"
+cover6.style.height="890px"
 cover6.style.zIndex = 2
 cover6.style.background="#dddddd"
+// cover6.style.background="blue"
 cover6.style.opacity=1
 
 let cover7 = document.getElementById("block7")
 cover7.style.position="absolute"
-cover7.style.top ="200px"
-cover7.style.left="886px"
+cover7.style.top ="190px"
+cover7.style.left="873px"
 cover7.style.width="30px"
-cover7.style.height="1440px"
+cover7.style.height="890px"
 cover7.style.zIndex = 2
 cover7.style.background="#dddddd"
+// cover7.style.background="green"
 cover7.style.opacity=1
 
 
@@ -359,8 +365,8 @@ function uncover_0(time){
         cover = document.getElementById("block5")
         cover.remove()  
         cover = document.getElementById("block7")
-        cover.style.top ="566px"
-        cover.style.height ="1074px"
+        cover.style.top ="558px"
+        cover.style.height ="522px"
      
         state = 1
     }

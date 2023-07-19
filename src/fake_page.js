@@ -7,11 +7,11 @@ let ickX = 0
 let ickY = 0
 
 function next_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 565) / 35) + 568
-  let pos_y = 35 * Math.floor((y - 265) / 35) + 265
+  let pos_x = 35 * Math.floor((x - 555) / 35) + 555
+  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x > 635 || pos_y > 290) && (pos_x < 740 || pos_y < 400)) {
+  if ((pos_x >= 625 || pos_y >= 280) && (pos_x <= 729 || pos_y <= 390)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
@@ -30,17 +30,17 @@ function next_month_dates(x, y) {
 
 function listings(x, y) {
   change_cursor("pointer")
-  if (y > 1465) {
-    underline(380, 450, 1545)
+  if (y > 1455) {
+    underline(370, 450, 1535)
   }
-  else if (y > 1200) {
-    underline(380, 450, 1290)
+  else if (y > 1190) {
+    underline(370, 450, 1280)
   }
-  else if (y > 955) {
-    underline(380, 250, 1033)
+  else if (y > 945) {
+    underline(370, 385, 1023)
   }
-  else if (y > 695) {
-    underline(380, 310, 777)
+  else if (y > 685) {
+    underline(370, 430, 767)
   }
   else if (y > 450) {
 
@@ -53,11 +53,11 @@ function calendar(x, y) {
 }
 
 function current_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 300) / 35) + 300
-  let pos_y = 35 * Math.floor((y - 265) / 35) + 265
+  let pos_x = 35 * Math.floor((x - 290) / 35) + 290
+  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x > 505 || pos_y > 290) && (pos_x < 370 || pos_y < 435)) {
+  if ((pos_x > 495 || pos_y > 280) && (pos_x < 360 || pos_y < 425)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
@@ -100,7 +100,7 @@ function change_cursor(text) {
 
 function close_button(x, y) {
   change_cursor("pointer")
-  underline(815, 45, 548)
+  underline(804, 45, 539)
   return
 }
 
@@ -110,8 +110,8 @@ function text(x, y){
 
 function next_button(x, y){
   let highlight = document.getElementById("highlight")
-  highlight.style.left = 817 + "px"
-  highlight.style.top = 303 + "px"
+  highlight.style.left = 806 + "px"
+  highlight.style.top = 295 + "px"
   highlight.style.opacity = 0.3
   highlight.style.background = "#1d91f0"
   highlight.style.width = "40px"
@@ -137,19 +137,19 @@ function underline(x, width, y) {
 }
 
 let areas = {
-  "Calendar Next Month Dates": [565, 265, 810, 435],
+  "Calendar Next Month Dates": [555, 255, 800, 425],
   "Calendar Current Month Dates": [300, 265, 540, 455],
   "Calendar Close": [815, 530, 865, 550],
-  "Calendar Next Button": [819, 303, 853, 340],
+  "Calendar Next Button": [809, 293, 843, 330],
   "Calendar": [225, 150, 890, 565],
-  "Map": [891, 200, 2235, 1600],
+  "Map": [881, 190, 2225, 1590],
   "Search Box": [20, 80, 365, 130],
-  "Listings": [0, 450, 890, 1600],
-  "Check Dates": [385, 80, 730, 130],
-  "Group": [750, 80, 980, 130],
-  "Top Text": [40, 230, 223, 280],
-  "Bottom Text": [34, 282, 178, 312],
-  "Filter Buttons": [23, 145, 222, 185]
+  "Listings": [0, 440, 880, 1590],
+  "Check Dates": [375, 70, 720, 120],
+  "Group": [740, 70, 970, 120],
+  "Top Text": [30, 220, 213, 270],
+  "Bottom Text": [24, 272, 168, 302],
+  "Filter Buttons": [13, 135, 212, 175]
 }
 
 let hover = {
@@ -197,7 +197,6 @@ function printMousePos(event) {
 
   let x = event.clientX
   let y = event.clientY
-
   let selection;
 
   let keys = Object.keys(areas)
@@ -222,9 +221,6 @@ function printMousePos(event) {
   let bottomRightSearch = [980, 130]
 
 
-  // console.log(mouseStarts)
-  // console.log(mouseEnds)
-
   let object = {
     selection: selection,
     start: mouseStarts,
@@ -239,8 +235,6 @@ function printMousePos(event) {
   },
   body: dataStr
 })
-
-
   for (let x = 1; x < mouseEnds.length; x++) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
     // console.log("Mouse moves: " + timing )
@@ -276,6 +270,7 @@ function printMove(event) {
     }
   }
 }
+
 
 
 
