@@ -94,8 +94,8 @@
         function sendInfo() {
             let object = {
                 page: "First Questionanaire",
-                load: loadvalue,
-                responsiveness: resvalue
+                load: loadvalue.textContent,
+                responsiveness: resvalue.textContent
             }
             let dataStr = JSON.stringify(object)
 

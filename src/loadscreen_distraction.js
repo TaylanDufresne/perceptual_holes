@@ -6,19 +6,25 @@ let mouseEnds = []
 let ickX = 0
 let ickY = 0
 
+let width = document.getElementById("image").getBoundingClientRect().width
+let height = document.getElementById("image").getBoundingClientRect().height
 
+let x_ratio = width/1920
+let y_ratio = height/1080
+
+console.log(width, height)
 
 function next_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 555) / 35) + 555
-  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
+  let pos_x = (35*x_ratio * Math.floor((x - 555*x_ratio) /( 35*x_ratio)) + 555*x_ratio) 
+  let pos_y = (35*y_ratio * Math.floor((y - 257*y_ratio) / (35*y_ratio)) + 257*y_ratio) 
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x >= 625 || pos_y >= 280) && (pos_x <= 729 || pos_y <= 390)) {
+  if ((pos_x >= 625*x_ratio || pos_y >= 280*y_ratio) && (pos_x <= 729*x_ratio || pos_y <= 390*y_ratio)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
-    highlight.style.width = "35px"
-    highlight.style.height = "35px"
+    highlight.style.width = 35*x_ratio + "px"
+    highlight.style.height = 35*y_ratio + "px"
     highlight.style.position = "absolute"
     highlight.style.left = pos_x + "px"
     highlight.style.top = pos_y + "px"
@@ -32,19 +38,19 @@ function next_month_dates(x, y) {
 
 function listings(x, y) {
   change_cursor("pointer")
-  if (y > 1455) {
-    underline(370, 450, 1535)
+  if (y > 1455*y_ratio) {
+    underline(370*x_ratio, 450*x_ratio, 1535*y_ratio)
   }
-  else if (y > 1190) {
-    underline(370, 450, 1280)
+  else if (y > 1190*y_ratio) {
+    underline(370*x_ratio, 450*x_ratio, 1280*y_ratio)
   }
-  else if (y > 945) {
-    underline(370, 385, 1023)
+  else if (y > 945*y_ratio) {
+    underline(370*x_ratio, 385*x_ratio, 1023*y_ratio)
   }
-  else if (y > 685) {
-    underline(370, 430, 767)
+  else if (y > 685*y_ratio) {
+    underline(370*x_ratio, 430*x_ratio, 767*y_ratio)
   }
-  else if (y > 450) {
+  else if (y > 450*y_ratio) {
 
   }
   return
@@ -55,16 +61,16 @@ function calendar(x, y) {
 }
 
 function current_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 290) / 35) + 290
-  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
+  let pos_x = (35*x_ratio* Math.floor((x - 290*x_ratio) / (35*x_ratio)) + 290*x_ratio)
+  let pos_y = (35*y_ratio * Math.floor((y - 257*y_ratio) /( 35*y_ratio)) + 257*y_ratio)
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x > 495 || pos_y > 280) && (pos_x < 360 || pos_y < 425)) {
+  if ((pos_x > 495*x_ratio || pos_y > 280*y_ratio) && (pos_x < 360*x_ratio || pos_y < 425*y_ratio)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
-    highlight.style.width = "35px"
-    highlight.style.height = "35px"
+    highlight.style.width = 35*x_ratio + "px"
+    highlight.style.height = 35*y_ratio + "px"
     highlight.style.position = "absolute"
     highlight.style.left = pos_x + "px"
     highlight.style.top = pos_y + "px"
@@ -102,7 +108,7 @@ function change_cursor(text) {
 
 function close_button(x, y) {
   change_cursor("pointer")
-  underline(804, 45, 539)
+  underline(804* x_ratio, 45*x_ratio, 539*y_ratio)
   return
 }
 
@@ -112,13 +118,13 @@ function text(x, y){
 
 function next_button(x, y){
   let highlight = document.getElementById("highlight")
-  highlight.style.left = 806 + "px"
-  highlight.style.top = 295 + "px"
+  highlight.style.left = 806*x_ratio + "px"
+  highlight.style.top = 295*y_ratio + "px"
   highlight.style.opacity = 0.3
   highlight.style.background = "#1d91f0"
-  highlight.style.width = "40px"
-  highlight.style.height = "40px"
-  highlight.style.borderRadius = "50px"
+  highlight.style.width = 40 * x_ratio +"px"
+  highlight.style.height = 40 * y_ratio + "px"
+  highlight.style.borderRadius = "150px"
 }
 
 function clickable(x, y){
@@ -203,25 +209,12 @@ function printMousePos(event) {
 
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
-    if (x > areas[keys[key]][0] && x < areas[keys[key]][2] && y > areas[keys[key]][1] && y < areas[keys[key]][3]) {
+    if (x > areas[keys[key]][0] *x_ratio && x < areas[keys[key]][2] * x_ratio && y > areas[keys[key]][1] * y_ratio && y < areas[keys[key]][3] *y_ratio) {
       console.log(keys[key])
       selection = keys[key]
       break
     }
   }
-
-  let TopLeftCalendar = [225, 150]
-  let bottomRightCalendar = [890, 565]
-
-  let topLeftMap = [891, 200]
-  let bottomRightMap = [2235, 1600]
-
-  let topLeftListings = []
-  let BottomRightListings = []
-
-  let topLeftSearch = [20, 80]
-  let bottomRightSearch = [980, 130]
-
 
   let object = {
     page: "Loading Bar with distractions",
@@ -229,6 +222,7 @@ function printMousePos(event) {
     start: mouseStarts,
     ends: mouseEnds
   }
+
   let dataStr = JSON.stringify(object)
 
   fetch('http://hci-sandbox.usask.ca:3018/logging_holes',{
@@ -238,6 +232,7 @@ function printMousePos(event) {
   },
   body: dataStr
 })
+
   for (let x = 1; x < mouseEnds.length; x++) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
     // console.log("Mouse moves: " + timing )
@@ -268,7 +263,8 @@ function printMove(event) {
   savedTime = currentTime
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
-    if (x > areas[keys[key]][0] && x < areas[keys[key]][2] && y > areas[keys[key]][1] && y < areas[keys[key]][3]) {
+    if (x > areas[keys[key]][0] *x_ratio && x < areas[keys[key]][2] * x_ratio && y > areas[keys[key]][1] * y_ratio && y < areas[keys[key]][3] *y_ratio) {
+
       hover[keys[key]](x, y)
       break
     }
@@ -295,11 +291,11 @@ cover1.style.opacity = 1
 
 let cover2 = document.getElementById("block2")
 cover2.style.position = "absolute"
-cover2.style.top = "540px"
-cover2.style.left = "485px"
-cover2.style.width = "0px"
-cover2.style.height = "75px"
-cover2.style.borderRadius="15px"
+cover2.style.top = 540*y_ratio+"px"
+cover2.style.left = 485*x_ratio+"px"
+cover2.style.width = 0*x_ratio+"px"
+cover2.style.height = 75*y_ratio+"px"
+cover2.style.borderRadius=15*x_ratio+"px"
 cover2.style.zIndex = 2
 cover2.style.background = "green"
 cover2.style.opacity = 1
@@ -307,56 +303,56 @@ cover2.style.opacity = 1
 
 let cover3 = document.getElementById("block3")
 cover3.style.position = "absolute"
-cover3.style.top = "535px"
-cover3.style.left = "480px"
-cover3.style.width = "960px"
-cover3.style.height = "85px"
+cover3.style.top = 535*y_ratio+"px"
+cover3.style.left = 480*x_ratio+"px"
+cover3.style.width = 960*x_ratio+"px"
+cover3.style.height = 85*y_ratio+"px"
 cover3.style.zIndex = 1
 cover3.style.background = "grey"
-cover3.style.borderRadius = "10px"
+cover3.style.borderRadius = 10*x_ratio+"px"
 cover3.style.opacity = 1
 
 
 let cover4 = document.getElementById("block4")
 cover4.style.position = "absolute"
-cover4.style.top = "135px"
-cover4.style.left = "224px"
-cover4.style.width = "50px"
-cover4.style.height = "50px"
+cover4.style.top = 135*y_ratio+"px"
+cover4.style.left = 224*x_ratio+"px"
+cover4.style.width = 50*x_ratio+"px"
+cover4.style.height = 50*y_ratio+"px"
 cover4.style.zIndex = 2
-cover4.style.borderRadius = "25px"
+cover4.style.borderRadius = 25*x_ratio+"px"
 cover4.style.background = "blue"
 cover4.style.opacity = 0
 
 let cover5 = document.getElementById("block5")
 cover5.style.position = "absolute"
-cover5.style.top = "200px"
-cover5.style.width = "50px"
-cover5.style.height = "50px"
+cover5.style.top = 200*y_ratio+"px"
+cover5.style.width = 50*x_ratio+"px"
+cover5.style.height = 50*y_ratio+"px"
 cover5.style.zIndex = 2
-cover5.style.borderRadius = "25px"
+cover5.style.borderRadius = 25*x_ratio+"px"
 cover5.style.background = "red"
 cover5.style.opacity = 0
 
 let cover6 = document.getElementById("block6")
 cover6.style.position = "absolute"
-cover6.style.top = "1000px"
-cover6.style.left = "889px"
-cover6.style.width = "50px"
-cover6.style.height = "50px"
+cover6.style.top = 1000*y_ratio+"px"
+cover6.style.left = 889*x_ratio+"px"
+cover6.style.width = 50*x_ratio+"px"
+cover6.style.height = 50*y_ratio+"px"
 cover6.style.zIndex = 2
-cover6.style.borderRadius = "25px"
+cover6.style.borderRadius = 25*x_ratio+"px"
 cover6.style.background = "orange"
 cover6.style.opacity = 0
 
 let cover7 = document.getElementById("block7")
 cover7.style.position = "absolute"
-cover7.style.top = "200px"
-cover7.style.left = "886px"
-cover7.style.width = "50px"
-cover7.style.height = "50px"
+cover7.style.top = 200*y_ratio+"px"
+cover7.style.left = 886*x_ratio+"px"
+cover7.style.width = 50*x_ratio+"px"
+cover7.style.height = 50*y_ratio+"px"
 cover7.style.zIndex = 2
-cover7.style.borderRadius = "25px"
+cover7.style.borderRadius = 25*x_ratio+"px"
 cover7.style.background = "green"
 cover7.style.opacity = 0
 
@@ -372,11 +368,11 @@ function incrementLoadingScreen() {
   let counter = 0
   function frame() {
     let cover = document.getElementById("block2")
-    let width = cover ? cover.getBoundingClientRect().width : 950
+    let width = cover ? cover.getBoundingClientRect().width : 950*x_ratio
     if (counter >= 500) {
       clearInterval(id)
     }
-    else if (width >= 950) {
+    else if (width >= 950*x_ratio) {
       clearInterval(id)
     }
     else {

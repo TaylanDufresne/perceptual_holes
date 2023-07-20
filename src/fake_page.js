@@ -6,17 +6,25 @@ let mouseEnds = []
 let ickX = 0
 let ickY = 0
 
+let width = document.getElementById("image").getBoundingClientRect().width
+let height = document.getElementById("image").getBoundingClientRect().height
+
+let x_ratio = width/1920
+let y_ratio = height/1080
+
+console.log(width, height)
+
 function next_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 555) / 35) + 555
-  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
+  let pos_x = (35*x_ratio * Math.floor((x - 555*x_ratio) /( 35*x_ratio)) + 555*x_ratio) 
+  let pos_y = (35*y_ratio * Math.floor((y - 257*y_ratio) / (35*y_ratio)) + 257*y_ratio) 
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x >= 625 || pos_y >= 280) && (pos_x <= 729 || pos_y <= 390)) {
+  if ((pos_x >= 625*x_ratio || pos_y >= 280*y_ratio) && (pos_x <= 729*x_ratio || pos_y <= 390*y_ratio)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
-    highlight.style.width = "35px"
-    highlight.style.height = "35px"
+    highlight.style.width = 35*x_ratio + "px"
+    highlight.style.height = 35*y_ratio + "px"
     highlight.style.position = "absolute"
     highlight.style.left = pos_x + "px"
     highlight.style.top = pos_y + "px"
@@ -30,19 +38,19 @@ function next_month_dates(x, y) {
 
 function listings(x, y) {
   change_cursor("pointer")
-  if (y > 1455) {
-    underline(370, 450, 1535)
+  if (y > 1455*y_ratio) {
+    underline(370*x_ratio, 450*x_ratio, 1535*y_ratio)
   }
-  else if (y > 1190) {
-    underline(370, 450, 1280)
+  else if (y > 1190*y_ratio) {
+    underline(370*x_ratio, 450*x_ratio, 1280*y_ratio)
   }
-  else if (y > 945) {
-    underline(370, 385, 1023)
+  else if (y > 945*y_ratio) {
+    underline(370*x_ratio, 385*x_ratio, 1023*y_ratio)
   }
-  else if (y > 685) {
-    underline(370, 430, 767)
+  else if (y > 685*y_ratio) {
+    underline(370*x_ratio, 430*x_ratio, 767*y_ratio)
   }
-  else if (y > 450) {
+  else if (y > 450*y_ratio) {
 
   }
   return
@@ -53,16 +61,16 @@ function calendar(x, y) {
 }
 
 function current_month_dates(x, y) {
-  let pos_x = 35 * Math.floor((x - 290) / 35) + 290
-  let pos_y = 35 * Math.floor((y - 257) / 35) + 257
+  let pos_x = (35*x_ratio* Math.floor((x - 290*x_ratio) / (35*x_ratio)) + 290*x_ratio)
+  let pos_y = (35*y_ratio * Math.floor((y - 257*y_ratio) /( 35*y_ratio)) + 257*y_ratio)
   let highlight = document.getElementById("highlight")
   let image = document.getElementById("image")
-  if ((pos_x > 495 || pos_y > 280) && (pos_x < 360 || pos_y < 425)) {
+  if ((pos_x > 495*x_ratio || pos_y > 280*y_ratio) && (pos_x < 360*x_ratio || pos_y < 425*y_ratio)) {
     highlight.style.background = "grey"
     highlight.style.borderRadius = "0px"
     highlight.style.opacity = 0.5
-    highlight.style.width = "35px"
-    highlight.style.height = "35px"
+    highlight.style.width = 35*x_ratio + "px"
+    highlight.style.height = 35*y_ratio + "px"
     highlight.style.position = "absolute"
     highlight.style.left = pos_x + "px"
     highlight.style.top = pos_y + "px"
@@ -100,7 +108,7 @@ function change_cursor(text) {
 
 function close_button(x, y) {
   change_cursor("pointer")
-  underline(804, 45, 539)
+  underline(804* x_ratio, 45*x_ratio, 539*y_ratio)
   return
 }
 
@@ -110,13 +118,13 @@ function text(x, y){
 
 function next_button(x, y){
   let highlight = document.getElementById("highlight")
-  highlight.style.left = 806 + "px"
-  highlight.style.top = 295 + "px"
+  highlight.style.left = 806*x_ratio + "px"
+  highlight.style.top = 295*y_ratio + "px"
   highlight.style.opacity = 0.3
   highlight.style.background = "#1d91f0"
-  highlight.style.width = "40px"
-  highlight.style.height = "40px"
-  highlight.style.borderRadius = "50px"
+  highlight.style.width = 40 * x_ratio +"px"
+  highlight.style.height = 40 * y_ratio + "px"
+  highlight.style.borderRadius = "150px"
 }
 
 function clickable(x, y){
@@ -201,7 +209,7 @@ function printMousePos(event) {
 
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
-    if (x > areas[keys[key]][0] && x < areas[keys[key]][2] && y > areas[keys[key]][1] && y < areas[keys[key]][3]) {
+    if (x > areas[keys[key]][0] *x_ratio && x < areas[keys[key]][2] * x_ratio && y > areas[keys[key]][1] * y_ratio && y < areas[keys[key]][3] *y_ratio) {
       console.log(keys[key])
       selection = keys[key]
       break
@@ -266,7 +274,8 @@ function printMove(event) {
   savedTime = currentTime
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
-    if (x > areas[keys[key]][0] && x < areas[keys[key]][2] && y > areas[keys[key]][1] && y < areas[keys[key]][3]) {
+    if (x > areas[keys[key]][0]*x_ratio && x < areas[keys[key]][2]*x_ratio && y > areas[keys[key]][1]*y_ratio && y < areas[keys[key]][3]*y_ratio) {
+      console.log(keys[key])
       hover[keys[key]](x, y)
       break
     }
