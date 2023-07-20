@@ -222,13 +222,14 @@ function printMousePos(event) {
 
 
   let object = {
+    page: "Instant Load",
     selection: selection,
     start: mouseStarts,
     ends: mouseEnds
   }
   let dataStr = JSON.stringify(object)
 
-  fetch('https://hci-sandbox.usask.ca/logging_holes',{
+  fetch('http://hci-sandbox.usask.ca:3018/logging_holes',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -239,6 +240,7 @@ function printMousePos(event) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
     // console.log("Mouse moves: " + timing )
   }
+  window.location.replace("http://hci-sandbox.usask.ca:3017/questionnaire2.html")
 }
 
 function printMove(event) {
@@ -276,3 +278,6 @@ function printMove(event) {
 
 document.addEventListener("click", printMousePos);
 document.addEventListener("mousemove", printMove);
+
+document.getElementById("image").style.zIndex = 0
+document.getElementById("image").style.opacity = 1

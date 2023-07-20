@@ -6,11 +6,17 @@ const app = express();
 
 // Connection variables
 const PORT = 8080;
-const HOST = '0.0.0.0';
+// const HOST = '0.0.0.0';
 
 /**
  * Set up redirect so that / uses html
  */
+
+app.route('/')
+    .get((req, res, next) => {
+        res.redirect('/directions.html');
+    })
+
 app.route('/1')
     .get((req, res, next) => {
         res.redirect('/index1.html');
@@ -34,5 +40,5 @@ app.route('/4')
 app.use('/', express.static('pages'));
 app.use('/', express.static('src'));
 
-app.listen(PORT, HOST);
+app.listen(PORT);
 console.log('Server up and running on port: ' + PORT);

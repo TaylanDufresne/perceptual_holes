@@ -224,13 +224,14 @@ function printMousePos(event) {
 
 
   let object = {
+    page: "Loading Bar with distractions",
     selection: selection,
     start: mouseStarts,
     ends: mouseEnds
   }
   let dataStr = JSON.stringify(object)
 
-  fetch('https://hci-sandbox.usask.ca/logging_holes',{
+  fetch('http://hci-sandbox.usask.ca:3018/logging_holes',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -241,6 +242,7 @@ function printMousePos(event) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
     // console.log("Mouse moves: " + timing )
   }
+  window.location.replace("http://hci-sandbox.usask.ca:3017/questionnaire.html")
 }
 
 function printMove(event) {
@@ -361,8 +363,8 @@ cover7.style.opacity = 0
 //locations 202, 216
 // 1527, 207
 // 1527, 663
-
-
+document.getElementById("image").style.zIndex = 0
+document.getElementById("image").style.opacity = 1
 // calender, map, listings
 
 function incrementLoadingScreen() {

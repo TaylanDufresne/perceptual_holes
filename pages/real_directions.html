@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script> -->
+    <link rel="stylesheet" href="questionnaire.css">
+</head>
+
+<body>
+    <!-- <img src="vrbo_screenshot.webp" id="image" style="position: absolute; left: -5px;top: -5px"/>
+  <div id="highlight"></div>
+  <div id="block1"></div>
+  <div id="block2"></div>
+  <div id="block3"></div>
+  <div id="block4"></div>
+  <div id="block5"></div>
+  <div id="block6"></div>
+  <div id="block7"></div>
+  <main>
+    div to contain p5 sketch -->
+    <!-- <div id="main-canvas"></div> -->
+    <div class="content">
+
+        <h3>
+            Your task is to look at an apartment listing application, and find an appartment that satisfies the following criteria:
+        </h3>
+        <li>
+        has a kitchen
+    </li>
+    <li>
+        available from November 1st to November 8th
+    </li>
+    <li>
+        is within a few blocks of Robson Square Park
+    </li>
+    <p>
+        A reference will be provided.
+    </p>
+
+    <!-- <div>
+        <input type="radio" id="responsiveness1" name="responsiveness" value="1">
+        <label for="1">1</label>
+        <input type="radio" id="responsiveness2" name="responsiveness" value="2">
+        <label for="2">2</label>
+        <input type="radio" id="responsiveness3" name="responsiveness" value="3">
+        <label for="3">3</label>
+        <input type="radio" id="responsiveness4" name="responsiveness" value="4">
+        <label for="4">4</label>
+        <input type="radio" id="responsiveness5" name="responsiveness" value="5">
+        <label for="5">5</label>
+        <input type="radio" id="responsiveness6" name="responsiveness" value="6">
+        <label for="6">6</label>
+        <input type="radio" id="responsiveness7" name="responsiveness" value="7">
+        <label for="7">7</label>
+        <input type="radio" id="responsiveness8" name="responsiveness" value="8">
+        <label for="8">8</label>
+        <input type="radio" id="responsiveness9" name="responsiveness" value="9">
+        <label for="9">9</label>
+        <input type="radio" id="responsiveness10" name="responsiveness" value="10">
+        <label for="10">10</label>
+
+    </div>
+    
+    <h3>
+        How long did the page take to load?
+    </h3>
+
+    <lable for="loadtime" id="loadtime_lable">Loading Time: 5 seconds</lable>
+    <br />
+    <input type="range" id="loadtime" name="Loading Time" min="0" max="10" step="0.25" onchange=updateSlider></input>
+    <br/> -->
+    <button onclick=sendInfo()>
+        Begin
+    </button>
+</div>
+
+    
+    <!-- 
+    <input type="radio" id="loadtime0" name="loadtime" value="0">
+    <label for="0">0 seconds - instant</label>
+    <input type="radio" id="loadtime1" name="loadtime" value="0.25 seconds">
+    <label for="0.25">0.25 seconds</label>
+    <input type="radio" id="loadtime2" name="loadtime" value="0.25 - 1">
+    <label for="0.25 - 1">0.25 - 1 seconds</label>
+    <input type="radio" id="loadtime3" name="loadtime" value="1-2">
+    <label for="1-2">1-2 seconds</label>
+    <input type="radio" id="loadtime4" name="loadtime" value="2-3">
+    <label for="2-3">2-3 seconds</label>
+    <input type="radio" id="loadtime5" name="loadtime" value="3-5">
+    <label for="3-5">3-5 seconds</label>
+    <input type="radio" id="loadtime6" name="loadtime" value="">
+    <label for="6">6 seconds</label>
+    <input type="radio" id="loadtime7" name="loadtime" value="7">
+    <label for="7">7 seconds</label>
+    <input type="radio" id="loadtime8" name="loadtime" value="8">
+    <label for="8">8 seconds</label>
+    <input type="radio" id="loadtime9" name="loadtime" value="9">
+    <label for="9">9 seconds</label>
+    <input type="radio" id="loadtime10" name="loadtime" value="10">
+    <label for="10">10</label> -->
+
+    </main>
+    <!-- Important that js files containing classes are listed before the files where they are used -->
+    <!-- <script src="sketch.js"></script>
+    <script src="main.js"></script> -->
+    <!-- <script src="fake_page.js"> -->
+
+    <script>
+
+        const value = document.querySelector("#loadtime_lable");
+        const input = document.querySelector("#loadtime");
+        document.addEventListener("input", (event) => {
+            let score = event.target.value
+            let suffix = " seconds"
+            if (score == 0){
+                suffix = " seconds (instant)"
+            }
+            else if(score == 10){
+                suffix = " seconds, or greater"
+            }
+
+            value.textContent = "Loading time: " + score + suffix
+        })
+
+        function updateSlider() {
+            console.log("Sup")
+            document.getElementById("loadtime_lable").innerHTML(document.getElementById(loadtime.value))
+        }
+
+
+
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+
+        function sendInfo() {
+            let page = getRndInteger(1, 2)
+            window.location.replace("http://hci-sandbox.usask.ca:3017/" + page)
+        }
+    </script>
+
+    </script>
+</body>
+
+</html>

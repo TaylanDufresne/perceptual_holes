@@ -1,0 +1,32 @@
+h1,h2,h3,h4,h5,h6 {
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+
+}
+
+lable {
+    font-size: medium;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+body {
+    display: block;
+    background: #6f9e73;
+}
+
+button {
+    margin-top: 4rem;
+
+}
+
+.content {
+    padding: 2rem;
+    border-radius: 2rem;;
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-width: 650px;
+}
+
