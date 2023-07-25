@@ -5,6 +5,31 @@ let mouseStarts = []
 let mouseEnds = []
 let ickX = 0
 let ickY = 0
+let locations = {
+  "Calendar Next Month Dates": [],
+  "Calendar Current Month Dates": [],
+  "Calendar Close": [],
+  "Calendar Next Button": [],
+  "Calendar": [],
+  "Map": [],
+  "Search Box": [],
+  "Listings": [],
+  "Check Dates": [],
+  "Group": [],
+  "Top Text": [],
+  "Bottom Text": [],
+  "Filter Buttons": [], 
+}
+currentLocation = ""
+let load_progress = {
+  "Loaded": "undefined",
+  "Loading": Date.now(),
+  "Distraction_1": "undefined",
+  "Distraction_2": "undefined",
+  "Distraction_3": "undefined",
+  "Distraction_4": "undefined",
+
+}
 
 let width = document.getElementById("image").getBoundingClientRect().width
 let height = document.getElementById("image").getBoundingClientRect().height
@@ -157,7 +182,7 @@ let areas = {
   "Group": [740, 70, 970, 120],
   "Top Text": [30, 220, 213, 270],
   "Bottom Text": [24, 272, 168, 302],
-  "Filter Buttons": [13, 135, 212, 175]
+  "Filter Buttons": [13, 135, 212, 175],
 }
 
 let hover = {
@@ -182,26 +207,9 @@ function test(event) {
 }
 
 function printMousePos(event) {
-  //   if (event.clientX < 100 && event.clientY < 100 && state == "test") {
-  //     state = "nope"
-  //     document.body.textContent =
-  //       "clientX: " + event.clientX +
-  //       " - clientY: " + event.clientY;
-  //   }
-
-  // }
   if (!mouseEnds.includes(savedTime)) {
     mouseEnds.push(savedTime)
   }
-
-  console.log(event.clientX)
-  console.log(event.clientY)
-  // console.log(mouseStarts)
-  // console.log(mouseEnds)
-  // for (let x = 1; x < mouseEnds.length; x++) {
-  //   let timing = mouseEnds[x] - mouseStarts[x - 1]
-  //   console.log("Mouse moves: " + timing )
-  // }
 
   let x = event.clientX
   let y = event.clientY
@@ -220,7 +228,10 @@ function printMousePos(event) {
     page: "Loading Bar with distractions",
     selection: selection,
     start: mouseStarts,
-    ends: mouseEnds
+    ends: mouseEnds,
+    startTime: startTime,
+    locations: locations,
+    load_progress: load_progress,
   }
 
   let dataStr = JSON.stringify(object)
@@ -233,9 +244,17 @@ function printMousePos(event) {
   body: dataStr
 })
 
+// fetch('http://localhost:8016/logging_holes',{
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+// },
+// body: dataStr
+// })
+
   for (let x = 1; x < mouseEnds.length; x++) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
-    // console.log("Mouse moves: " + timing )
+
   }
   window.location.replace("http://hci-sandbox.usask.ca:3017/questionnaire.html")
 }
@@ -247,9 +266,9 @@ function printMove(event) {
   let highlight = document.getElementById("highlight")
   highlight.style.opacity = 0
 
-  let currentTime = Date.now() - startTime
+  let currentTime = Date.now()
   if (currentTime - savedTime > 100) {
-    console.log("New Mouse Move: " + currentTime)
+    // console.log("New Mouse Move: " + currentTime)
     mouseStarts.push(currentTime)
     mouseEnds.push(savedTime)
 
@@ -264,7 +283,10 @@ function printMove(event) {
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
     if (x > areas[keys[key]][0] *x_ratio && x < areas[keys[key]][2] * x_ratio && y > areas[keys[key]][1] * y_ratio && y < areas[keys[key]][3] *y_ratio) {
-
+      if (currentLocation !== keys[key]){
+        currentLocation = keys[key]
+        locations[keys[key]].push(currentTime)
+      }
       hover[keys[key]](x, y)
       break
     }
@@ -385,21 +407,13 @@ function incrementLoadingScreen() {
 
 function uncover_0(time) {
   let cover = document.getElementById("block2")
-  // cover.style.width = cover.getBoundingClientRect().width + 68 + "px"
-  // console.log(cover.getBoundingClientRect().width)
-  // cover.style.animationDuration = "0.5s"
-  // cover.style.cssText= "@keyframes {0% {background-color: red}}"
-  // 
+
   incrementLoadingScreen()
   if (time > 2000) {
-    // debugger
 
     cover = document.getElementById("block4")
     cover.style.opacity = 1
-
-    // cover = document.getElementById("block7")
-    // cover.style.top = "566px"
-    // cover.style.height = "1074px"
+    load_progress["Distraction_1"] = Date.now()
     state = 1
 
   }
@@ -410,10 +424,9 @@ function uncover_1(time) {
   if (time > 3000) {
     let cover = document.getElementById("block5")
     cover.style.opacity = 1
+    load_progress["Distraction_2"] = Date.now()
     cover = document.getElementById("block4")
     cover.remove()
-    // cover = document.getElementById("block7")
-    // cover.style.opacity = 1
     state = 2
   }
   return
@@ -423,10 +436,9 @@ function uncover_2(time) {
   if (time > 4000 && state == 2) {
     let cover = document.getElementById("block5")
     cover.remove()
-    // cover = document.getElementById("block7")
-    // cover.remove()
     cover = document.getElementById("block6")
     cover.style.opacity = 1 
+    load_progress["Distraction_3"] = Date.now()
     state = 3
     return
   }
@@ -436,17 +448,11 @@ function uncover_3(time) {
   incrementLoadingScreen()
   if (time > 5000 && state == 3) {
 
-
-    // let cover = document.getElementById("block2")
-    // cover.remove()
-    // cover = document.getElementById("block1")
-    // cover.remove()
-    // cover = document.getElementById("block3")
-    // cover.remove()
     cover = document.getElementById("block6")
     cover.remove()
     cover = document.getElementById("block7")
     cover.style.opacity = 1
+    load_progress["Distraction_4"] = Date.now()
 
 
     state = 4
@@ -467,7 +473,7 @@ function uncover_4(time) {
     cover = document.getElementById("block7")
     cover.remove()
 
-
+    load_progress["Loaded"] = Date.now()
     state = 5
     return
   }

@@ -5,7 +5,27 @@ let mouseStarts = []
 let mouseEnds = []
 let ickX = 0
 let ickY = 0
+let locations = {
+  "Calendar Next Month Dates": [],
+  "Calendar Current Month Dates": [],
+  "Calendar Close": [],
+  "Calendar Next Button": [],
+  "Calendar": [],
+  "Map": [],
+  "Search Box": [],
+  "Listings": [],
+  "Check Dates": [],
+  "Group": [],
+  "Top Text": [],
+  "Bottom Text": [],
+  "Filter Buttons": []
+}
+let load_progress = {
+  "Loaded": "undefined",
+  "Loading": Date.now()
 
+}
+currentLocation = ""
 
 
 let width = document.getElementById("image").getBoundingClientRect().width
@@ -223,7 +243,10 @@ function printMousePos(event) {
     page: "Loading Bar",
     selection: selection,
     start: mouseStarts,
-    ends: mouseEnds
+    ends: mouseEnds,
+    startTime: startTime,
+    locations: locations,
+    load_progress: load_progress
   }
   let dataStr = JSON.stringify(object)
 
@@ -234,6 +257,14 @@ function printMousePos(event) {
   },
   body: dataStr
 })
+
+// fetch('http://localhost:8016/logging_holes',{
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+// },
+// body: dataStr
+// })
   for (let x = 1; x < mouseEnds.length; x++) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
     // console.log("Mouse moves: " + timing )
@@ -249,12 +280,11 @@ function printMove(event) {
   let highlight = document.getElementById("highlight")
   highlight.style.opacity = 0
 
-  let currentTime = Date.now() - startTime
+  let currentTime = Date.now()
   if (currentTime - savedTime > 100) {
     console.log("New Mouse Move: " + currentTime)
     mouseStarts.push(currentTime)
     mouseEnds.push(savedTime)
-
   }
 
   let x = event.clientX
@@ -266,7 +296,10 @@ function printMove(event) {
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
     if (x > areas[keys[key]][0] *x_ratio && x < areas[keys[key]][2] * x_ratio && y > areas[keys[key]][1] * y_ratio && y < areas[keys[key]][3] *y_ratio) {
-
+      if (currentLocation !== keys[key]){
+        currentLocation = keys[key]
+        locations[keys[key]].push(currentTime)
+      }
       hover[keys[key]](x, y)
       break
     }
@@ -447,7 +480,7 @@ function uncover_4(time) {
     cover = document.getElementById("block7")
     cover.remove()
 
-
+    load_progress["Loaded"] = Date.now()
     state = 5
     return
   }

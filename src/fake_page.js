@@ -3,6 +3,25 @@ let startTime = Date.now()
 let savedTime = 0
 let mouseStarts = []
 let mouseEnds = []
+let locations = {
+  "Calendar Next Month Dates": [],
+  "Calendar Current Month Dates": [],
+  "Calendar Close": [],
+  "Calendar Next Button": [],
+  "Calendar": [],
+  "Map": [],
+  "Search Box": [],
+  "Listings": [],
+  "Check Dates": [],
+  "Group": [],
+  "Top Text": [],
+  "Bottom Text": [],
+  "Filter Buttons": []
+}
+currentLocation = ""
+let load_progress = {
+  "Loaded": Date.now()
+}
 let ickX = 0
 let ickY = 0
 
@@ -182,26 +201,14 @@ function test(event) {
 }
 
 function printMousePos(event) {
-  //   if (event.clientX < 100 && event.clientY < 100 && state == "test") {
-  //     state = "nope"
-  //     document.body.textContent =
-  //       "clientX: " + event.clientX +
-  //       " - clientY: " + event.clientY;
-  //   }
 
-  // }
   if (!mouseEnds.includes(savedTime)) {
     mouseEnds.push(savedTime)
   }
 
-  console.log(event.clientX)
-  console.log(event.clientY)
-  // console.log(mouseStarts)
-  // console.log(mouseEnds)
-  // for (let x = 1; x < mouseEnds.length; x++) {
-  //   let timing = mouseEnds[x] - mouseStarts[x - 1]
-  //   console.log("Mouse moves: " + timing )
-  // }
+  // console.log(event.clientX)
+  // console.log(event.clientY)
+
 
   let x = event.clientX
   let y = event.clientY
@@ -216,24 +223,15 @@ function printMousePos(event) {
     }
   }
 
-  let TopLeftCalendar = [225, 150]
-  let bottomRightCalendar = [890, 565]
-
-  let topLeftMap = [891, 200]
-  let bottomRightMap = [2235, 1600]
-
-  let topLeftListings = []
-  let BottomRightListings = []
-
-  let topLeftSearch = [20, 80]
-  let bottomRightSearch = [980, 130]
-
 
   let object = {
     page: "Instant Load",
     selection: selection,
     start: mouseStarts,
-    ends: mouseEnds
+    ends: mouseEnds,
+    startTime: startTime,
+    locations: locations,
+    load_progress: load_progress,
   }
   let dataStr = JSON.stringify(object)
 
@@ -244,10 +242,18 @@ function printMousePos(event) {
   },
   body: dataStr
 })
-  for (let x = 1; x < mouseEnds.length; x++) {
-    let timing = mouseEnds[x] - mouseStarts[x - 1]
-    // console.log("Mouse moves: " + timing )
-  }
+
+// fetch('http://localhost:8016/logging_holes',{
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+// },
+// body: dataStr
+// })
+  // for (let x = 1; x < mouseEnds.length; x++) {
+  //   let timing = mouseEnds[x] - mouseStarts[x - 1]
+  //   // console.log("Mouse moves: " + timing )
+  // }
   window.location.replace("http://hci-sandbox.usask.ca:3017/questionnaire2.html")
 }
 
@@ -258,9 +264,9 @@ function printMove(event) {
   let highlight = document.getElementById("highlight")
   highlight.style.opacity = 0
 
-  let currentTime = Date.now() - startTime
+  let currentTime = Date.now()
   if (currentTime - savedTime > 100) {
-    console.log("New Mouse Move: " + currentTime)
+    // console.log("New Mouse Move: " + currentTime)
     mouseStarts.push(currentTime)
     mouseEnds.push(savedTime)
 
@@ -276,6 +282,10 @@ function printMove(event) {
   for (let key = 0; key < keys.length; key++) {
     if (x > areas[keys[key]][0]*x_ratio && x < areas[keys[key]][2]*x_ratio && y > areas[keys[key]][1]*y_ratio && y < areas[keys[key]][3]*y_ratio) {
       console.log(keys[key])
+      if (currentLocation !== keys[key]){
+        currentLocation = keys[key]
+        locations[keys[key]].push(currentTime)
+      }
       hover[keys[key]](x, y)
       break
     }

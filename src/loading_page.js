@@ -5,8 +5,29 @@ let mouseStarts = []
 let mouseEnds = []
 let ickX = 0
 let ickY = 0
+let locations = {
+  "Calendar Next Month Dates": [],
+  "Calendar Current Month Dates": [],
+  "Calendar Close": [],
+  "Calendar Next Button": [],
+  "Calendar": [],
+  "Map": [],
+  "Search Box": [],
+  "Listings": [],
+  "Check Dates": [],
+  "Group": [],
+  "Top Text": [],
+  "Bottom Text": [],
+  "Filter Buttons": []
+}
+currentLocation = ""
 
-
+let load_progress = {
+  "Loaded": "undefined",
+  "Calendar Rendered": "undefined",
+  "Listings Rendered": "undefined",
+  "Loading": Date.now()
+}
 
 let width = document.getElementById("image").getBoundingClientRect().width
 let height = document.getElementById("image").getBoundingClientRect().height
@@ -222,7 +243,10 @@ function printMousePos(event) {
     page: "Sequential Load",
     selection: selection,
     start: mouseStarts,
-    ends: mouseEnds
+    ends: mouseEnds,
+    startTime: startTime,
+    locations: locations,
+    load_progress: load_progress,
   }
   let dataStr = JSON.stringify(object)
 
@@ -233,6 +257,16 @@ function printMousePos(event) {
   },
   body: dataStr
 })
+
+
+// fetch('http://localhost:8016/logging_holes',{
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+// },
+// body: dataStr
+// })
+
   for (let x = 1; x < mouseEnds.length; x++) {
     let timing = mouseEnds[x] - mouseStarts[x - 1]
     // console.log("Mouse moves: " + timing )
@@ -264,7 +298,10 @@ function printMove(event) {
   let keys = Object.keys(areas)
   for (let key = 0; key < keys.length; key++) {
     if (x > areas[keys[key]][0] *x_ratio && x < areas[keys[key]][2] * x_ratio && y > areas[keys[key]][1] * y_ratio && y < areas[keys[key]][3] *y_ratio) {
-
+      if (currentLocation !== keys[key]){
+        currentLocation = keys[key]
+        locations[keys[key]].push(currentTime)
+      }
       hover[keys[key]](x, y)
       break
     }
@@ -366,7 +403,7 @@ function uncover_0(time){
         cover = document.getElementById("block7")
         cover.style.top = 558*y_ratio + "px"
         cover.style.height = 522*y_ratio + "px"
-     
+        load_progress["Calendar Rendered"] = Date.now()
         state = 1
     }
     return
@@ -378,7 +415,7 @@ function uncover_1(time){
         cover.remove() 
         cover = document.getElementById("block1")
         cover.remove()
-       
+        load_progress["Listings Rendered"] = Date.now()
         state = 2
     }
     return
@@ -398,6 +435,7 @@ function uncover_3(time){
         cover.remove()
         cover = document.getElementById("block7")
         cover.remove()
+        load_progress["Loaded"] = Date.now()
         state = 4
         return
     }
