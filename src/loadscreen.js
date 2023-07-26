@@ -18,7 +18,8 @@ let locations = {
   "Group": [],
   "Top Text": [],
   "Bottom Text": [],
-  "Filter Buttons": []
+  "Filter Buttons": [],
+  "Nothing": [],
 }
 let load_progress = {
   "Loaded": "undefined",
@@ -304,8 +305,8 @@ function printMove(event) {
       hover[keys[key]](x, y)
       break
     }
-    currentLocation = "Nothing"
-    locations['Nothing'].push(currentTime)
+    // currentLocation = "Nothing"
+    // locations['Nothing'].push(currentTime)
   }
 }
 
