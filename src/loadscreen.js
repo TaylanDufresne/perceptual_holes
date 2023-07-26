@@ -242,6 +242,7 @@ function printMousePos(event) {
   let object = {
     page: "Loading Bar",
     selection: selection,
+    clickTime: Date.now(),
     start: mouseStarts,
     ends: mouseEnds,
     startTime: startTime,
@@ -303,6 +304,8 @@ function printMove(event) {
       hover[keys[key]](x, y)
       break
     }
+    currentLocation = "Nothing"
+    locations['Nothing'].push(currentTime)
   }
 }
 

@@ -18,7 +18,8 @@ let locations = {
   "Group": [],
   "Top Text": [],
   "Bottom Text": [],
-  "Filter Buttons": []
+  "Filter Buttons": [],
+  "Nothing": [],
 }
 currentLocation = ""
 
@@ -242,6 +243,7 @@ function printMousePos(event) {
   let object = {
     page: "Sequential Load",
     selection: selection,
+    clickTime: Date.now(),
     start: mouseStarts,
     ends: mouseEnds,
     startTime: startTime,
@@ -305,6 +307,8 @@ function printMove(event) {
       hover[keys[key]](x, y)
       break
     }
+    currentLocation = "Nothing"
+    locations['Nothing'].push(currentTime)
   }
 }
 

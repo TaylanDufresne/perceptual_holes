@@ -19,6 +19,7 @@ let locations = {
   "Top Text": [],
   "Bottom Text": [],
   "Filter Buttons": [], 
+  "Nothing": [],
 }
 currentLocation = ""
 let load_progress = {
@@ -227,6 +228,7 @@ function printMousePos(event) {
   let object = {
     page: "Loading Bar with distractions",
     selection: selection,
+    clickTime: Date.now(),
     start: mouseStarts,
     ends: mouseEnds,
     startTime: startTime,
@@ -290,6 +292,8 @@ function printMove(event) {
       hover[keys[key]](x, y)
       break
     }
+    currentLocation = "Nothing"
+    locations['Nothing'].push(currentTime)
   }
 }
 
