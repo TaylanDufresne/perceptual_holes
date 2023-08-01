@@ -4,19 +4,21 @@ let savedTime = 0
 let mouseStarts = []
 let mouseEnds = []
 let locations = {
-  "Map": [],
-  "Search Box": [],
-  "Listings": [],
-  "Check Dates": [],
-  "Group": [],
-  "Top Text": [],
-  "Bottom Text": [],
-  "Filter Buttons": [],
-  "Nothing": [],
-  "Zoom Buttons": [],
-  "Map Search Button": [],
-  "Listing Sort": [],
+  "Ad": [],
+  "LAX": [],
 }
+
+// Top left (x,y) and bottom right (x,y)
+let areas = {
+  "Ad": [1759, 0, 1914, 630],
+  "LAX": [790, 498, 807, 513],
+}
+
+let hover = {
+  "Ad": clickable,
+  "LAX": lax,
+}
+
 currentLocation = ""
 let load_progress = {
   "Loaded": Date.now()
@@ -32,47 +34,30 @@ let y_ratio = height/1080
 
 console.log(width, height)
 
-function listings(x, y) {
-  change_cursor("pointer")
-  if (y > 1455*y_ratio) {
-    underline(370*x_ratio, 450*x_ratio, 1535*y_ratio)
-  }
-  else if (y > 1190*y_ratio) {
-    underline(370*x_ratio, 470*x_ratio, 1280*y_ratio)
-  }
-  else if (y > 945*y_ratio) {
-    underline(370*x_ratio, 410*x_ratio, 1023*y_ratio)
-    underline2(370*x_ratio, 90*x_ratio, 1048*y_ratio )
-  }
-  else if (y > 685*y_ratio) {
-    underline(370*x_ratio, 250*x_ratio, 767*y_ratio)
-  }
-  else if (y > 450*y_ratio) {
-    underline(370*x_ratio, 435*x_ratio, 510*y_ratio)
-  }
-  return
+function lax(x, y){
+  let highlight = document.getElementById("highlight");
+  highlight.style.background = "#1FCA23"
+  highlight.style.opacity = 1;
+  highlight.style.border = "1px solid black"
+  highlight.style.borderRadius = "50px"
+  highlight.style.position = "absolute"
+    highlight.style.left = 785*x_ratio + "px"
+    highlight.style.top = 495 *y_ratio + "px"
+    highlight.style.width = 17*x_ratio + "px"
+    highlight.style.height= 17*y_ratio + "px"
+
 }
 function map(x, y) {
   change_cursor("grab")
   return
 }
 
-function check_dates(x, y) {
-  change_cursor("pointer")
-  return
-}
 
 function change_cursor(text) {
   let image = document.getElementById("image")
   image.style.cursor = text
 }
 
-
-function close_button(x, y) {
-  change_cursor("pointer")
-  underline(804* x_ratio, 45*x_ratio, 539*y_ratio)
-  return
-}
 
 function text(x, y){
   change_cursor("text")
@@ -107,35 +92,6 @@ function underline2(x, width, y) {
   highlight.style.cursor = "pointer"
   change_cursor("pointer")
 }
-// Top left (x,y) and bottom right (x,y)
-let areas = {
-  "Zoom Buttons": [900, 210, 949, 289],
-  "Map Search Button": [1700, 200, 1897, 240],
-  "Map": [881, 190, 2225, 1590],
-  "Search Box": [20, 80, 365, 130],
-  "Listings": [0, 440, 880, 1590],
-  "Check Dates": [375, 70, 720, 120],
-  "Group": [740, 70, 970, 120],
-  "Top Text": [30, 220, 631, 270],
-  "Bottom Text": [24, 272, 168, 302],
-  "Filter Buttons": [13, 135, 407, 175],
-  "Listing Sort": [790, 225, 845, 245],
-}
-
-let hover = {
-  "Map": map,
-  "Search Box": text,
-  "Listings": listings,
-  "Check Dates": clickable,
-  "Group": clickable,
-  'Top Text': text,
-  "Bottom Text": text,
-  "Filter Buttons": clickable,
-  "Zoom Buttons":  clickable,
-  "Map Search Button": clickable,
-  "Listing Sort": clickable,
-}
-
 
 function test(event) {
   console.log("Can pass functions")
@@ -199,6 +155,10 @@ function printMousePos(event) {
   // window.location.replace("http://hci-sandbox.usask.ca:3017/questionnaire2.html")
 }
 
+function trackScroll(event){
+  console.log("scrolling")
+}
+
 function printMove(event) {
   let image = document.getElementById("image")
   image.style.cursor = "default"
@@ -244,6 +204,7 @@ function printMove(event) {
 
 document.addEventListener("click", printMousePos);
 document.addEventListener("mousemove", printMove);
+document.addEventListener("wheel", trackScroll);
 
 document.getElementById("image").style.zIndex = 0
 document.getElementById("image").style.opacity = 1
